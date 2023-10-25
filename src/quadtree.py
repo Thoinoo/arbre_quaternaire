@@ -55,31 +55,35 @@ class QuadTree:
 
 
 class TkQuadTree(Tk):
-
-    """
-    def newQuadtreeFrame(self,master_frame, block, depth):
+    @staticmethod
+    def newQuadtreeFrame(master_frame, block, depth):
+        depth += 1
+        lenght = MAX_SIZE / (2 ** depth)
         for index, element in enumerate(block.getBlocks()):
+            x_pos = master_frame.winfo_x() + (coord_x[index] * lenght)
+            y_pos = master_frame.winfo_y() + (coord_y[index] * lenght)
             if isinstance(element, QuadTree):
-                self.newQuadtreeFrame(self, element)
+                frame = Frame(master_frame, width=lenght, height=lenght)
+                frame.place(x=x_pos, y=y_pos)
+                TkQuadTree.newQuadtreeFrame(frame, element, depth)
             else:
-                frame = Frame(master_frame, bg=color_dict[element], width=MAX_SIZE / 2, height=MAX_SIZE / 2)
-                frame.place(x=coord_x[index], y=coord_y[index])
-    """
+                frame = Frame(master_frame, bg=color_dict[element], width=lenght, height=lenght)
+                frame.place(x=x_pos, y=y_pos)
 
     def paint(self):
         """ TK representation of a Quadtree"""
-        main_frame = Frame(self, bg="black", width=MAX_SIZE, height=MAX_SIZE)
+        main_frame = Frame(self, bg="blue", width=MAX_SIZE, height=MAX_SIZE)
         main_frame.pack()
         depth = 1
-        lenght = MAX_SIZE / 2**depth
-
+        lenght = MAX_SIZE / (2 ** depth)
         print(type(self.__quadtree.getBlocks()))
         print(len(self.__quadtree.getBlocks()))
 
         for index, block in enumerate(self.__quadtree.getBlocks()):
             if isinstance(block, QuadTree):
-                pass
-                # self.newQuadtreeFrame(main_frame, block)
+                frame = Frame(main_frame, width=lenght, height=lenght)
+                frame.place(x=coord_x[index] * lenght, y=coord_y[index] * lenght)
+                self.newQuadtreeFrame(frame, block, depth)
                 # frame = self.newQuadtreeFrame(self,block)
                 # frame.place(x=coord_x[index], y=coord_y[index])
             else:
