@@ -1,3 +1,7 @@
+# Affichage TKinter
+
+Lancer main.py, selectioner dans la console le fichier que l'on veut afficher, profiter :)
+
 # Exercices ludiques en python
 
 Vous trouverez ici un ensemble d'exercices permettant de pratiquer python mais également découvrir quelques pans annexes de l'informatique en général.
