@@ -28,24 +28,19 @@ class QuadTree:
         except Exception as e:
             print("fromfile() error : " + str(e))
 
-        return QuadTree.new_node(lst)
-
+        return QuadTree.fromList(lst)
 
 
     @staticmethod
-    def new_node(qt_list):
+    def fromList(qt_list: list) -> QuadTree:
+        """ Generates a Quadtree from a list representation"""
         qt_param = []
         for element in qt_list:
             if not isinstance(element, list):
                 qt_param.append(element)
             else:
-                qt_param.append(QuadTree.new_node(element))
+                qt_param.append(QuadTree.fromList(element))
         return QuadTree(qt_param[0], qt_param[1], qt_param[2], qt_param[3])
-
-    @staticmethod
-    def fromList(data: list) -> QuadTree:
-        """ Generates a Quadtree from a list representation"""
-        pass
 
 
 class TkQuadTree(QuadTree):
