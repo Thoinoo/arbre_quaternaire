@@ -1,6 +1,7 @@
 from __future__ import annotations
 import json
-import os.path
+
+from tkinter import *
 
 
 class QuadTree:
@@ -25,11 +26,17 @@ class QuadTree:
         try:
             with open(filename, "r") as f:
                 lst = json.load(f)
+                return QuadTree.fromList(lst)
         except Exception as e:
             print("fromfile() error : " + str(e))
 
-        return QuadTree.fromList(lst)
-
+        # depuis main.py le chemin des fichiers doit être modifié
+        try:
+            with open("../" + filename, "r") as f:
+                lst = json.load(f)
+                return QuadTree.fromList(lst)
+        except Exception as e:
+            print("fromfile() error : " + str(e))
 
     @staticmethod
     def fromList(qt_list: list) -> QuadTree:
@@ -42,8 +49,57 @@ class QuadTree:
                 qt_param.append(QuadTree.fromList(element))
         return QuadTree(qt_param[0], qt_param[1], qt_param[2], qt_param[3])
 
+    def getBlocks(self):
+        return self.__blocks
 
-class TkQuadTree(QuadTree):
-    def paint(self):
-        """ TK representation of a Quadtree"""
+
+class TkQuadTree(Tk):
+
+    @staticmethod
+    def newQuadtreeFrame(self):
         pass
+
+    def paint(self):
+        MAX_SIZE = 512
+        color = {0: "black", 1: "white"}
+        coord_x = [0,1,0,1]
+        coord_y = [0,0,1,1]
+
+        """ TK representation of a Quadtree"""
+        main_frame = Frame(self, bg="black", width=MAX_SIZE, height=MAX_SIZE)
+        main_frame.pack()
+
+        print(type(self.__quadtree.getBlocks()))
+        print(len(self.__quadtree.getBlocks()))
+
+        for index, block in enumerate(self.__quadtree.getBlocks()):
+            if isinstance(block, QuadTree):
+                pass
+            else:
+                frame = Frame(main_frame, bg=color[block], width=MAX_SIZE / 2, height=MAX_SIZE / 2)
+                frame.place(x=coord_x[index], y=coord_y[index])
+
+        """
+        frame1 = Frame(self, bg="black", width=512, height=512)
+        frame1.pack()
+
+        # Frame 2
+        frame2 = Frame(frame1, bg="white", width=256, height=256)
+        # frame2.pack(side=TOP, anchor=NW)
+        frame2.place(x=0, y=0)
+
+        frame3 = Frame(frame1, bg="blue", width=256, height=256)
+        # frame3.pack(side=TOP, anchor=NE)
+        frame3.place(x=256, y=0)
+
+        frame4 = Frame(frame1, bg="red", width=256, height=256)
+        # frame4.pack(side=BOTTOM, anchor=SW)
+        frame4.place(x=0, y=256)
+        """
+        pass
+
+    def __init__(self, filename):
+        super().__init__()
+        self.__quadtree = QuadTree.fromFile(filename)
+        self.geometry("512x512")
+        self.paint()
