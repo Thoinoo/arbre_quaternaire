@@ -74,40 +74,9 @@ class TkQuadTree(Tk):
         """ TK representation of a Quadtree"""
         main_frame = Frame(self, bg="blue", width=MAX_SIZE, height=MAX_SIZE)
         main_frame.pack()
-        depth = 1
-        lenght = MAX_SIZE / (2 ** depth)
-        print(type(self.__quadtree.getBlocks()))
-        print(len(self.__quadtree.getBlocks()))
+        depth = 0
 
-        for index, block in enumerate(self.__quadtree.getBlocks()):
-            if isinstance(block, QuadTree):
-                frame = Frame(main_frame, width=lenght, height=lenght)
-                frame.place(x=coord_x[index] * lenght, y=coord_y[index] * lenght)
-                self.newQuadtreeFrame(frame, block, depth)
-                # frame = self.newQuadtreeFrame(self,block)
-                # frame.place(x=coord_x[index], y=coord_y[index])
-            else:
-                frame = Frame(main_frame, bg=color_dict[block], width=lenght, height=lenght)
-                frame.place(x=coord_x[index] * lenght, y=coord_y[index] * lenght)
-
-        """
-        frame1 = Frame(self, bg="black", width=512, height=512)
-        frame1.pack()
-
-        # Frame 2
-        frame2 = Frame(frame1, bg="white", width=256, height=256)
-        # frame2.pack(side=TOP, anchor=NW)
-        frame2.place(x=0, y=0)
-
-        frame3 = Frame(frame1, bg="blue", width=256, height=256)
-        # frame3.pack(side=TOP, anchor=NE)
-        frame3.place(x=256, y=0)
-
-        frame4 = Frame(frame1, bg="red", width=256, height=256)
-        # frame4.pack(side=BOTTOM, anchor=SW)
-        frame4.place(x=0, y=256)
-        """
-        pass
+        self.newQuadtreeFrame(self, self.__quadtree, depth)
 
     def __init__(self, filename):
         super().__init__()
