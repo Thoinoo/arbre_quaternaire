@@ -2,6 +2,7 @@ from __future__ import annotations
 import json
 
 from tkinter import *
+from param import *
 
 
 class QuadTree:
@@ -55,19 +56,22 @@ class QuadTree:
 
 class TkQuadTree(Tk):
 
-    @staticmethod
-    def newQuadtreeFrame(self):
-        pass
+    """
+    def newQuadtreeFrame(self,master_frame, block, depth):
+        for index, element in enumerate(block.getBlocks()):
+            if isinstance(element, QuadTree):
+                self.newQuadtreeFrame(self, element)
+            else:
+                frame = Frame(master_frame, bg=color_dict[element], width=MAX_SIZE / 2, height=MAX_SIZE / 2)
+                frame.place(x=coord_x[index], y=coord_y[index])
+    """
 
     def paint(self):
-        MAX_SIZE = 512
-        color = {0: "black", 1: "white"}
-        coord_x = [0,1,0,1]
-        coord_y = [0,0,1,1]
-
         """ TK representation of a Quadtree"""
         main_frame = Frame(self, bg="black", width=MAX_SIZE, height=MAX_SIZE)
         main_frame.pack()
+        depth = 1
+        lenght = MAX_SIZE / 2**depth
 
         print(type(self.__quadtree.getBlocks()))
         print(len(self.__quadtree.getBlocks()))
@@ -75,9 +79,12 @@ class TkQuadTree(Tk):
         for index, block in enumerate(self.__quadtree.getBlocks()):
             if isinstance(block, QuadTree):
                 pass
+                # self.newQuadtreeFrame(main_frame, block)
+                # frame = self.newQuadtreeFrame(self,block)
+                # frame.place(x=coord_x[index], y=coord_y[index])
             else:
-                frame = Frame(main_frame, bg=color[block], width=MAX_SIZE / 2, height=MAX_SIZE / 2)
-                frame.place(x=coord_x[index], y=coord_y[index])
+                frame = Frame(main_frame, bg=color_dict[block], width=lenght, height=lenght)
+                frame.place(x=coord_x[index] * lenght, y=coord_y[index] * lenght)
 
         """
         frame1 = Frame(self, bg="black", width=512, height=512)
@@ -101,5 +108,5 @@ class TkQuadTree(Tk):
     def __init__(self, filename):
         super().__init__()
         self.__quadtree = QuadTree.fromFile(filename)
-        self.geometry("512x512")
+        self.geometry(f"{MAX_SIZE}x{MAX_SIZE}")
         self.paint()
