@@ -4,7 +4,6 @@ import json
 from tkinter import *
 
 
-
 class QuadTree:
     NB_NODES: int = 4
 
@@ -83,3 +82,4 @@ class TkQuadTree(Tk):
         self.__quadtree = QuadTree.fromFile(filename)
         self.geometry(f"{MAX_SIZE}x{MAX_SIZE}")
         self.paint()
+        self.title( f"Depth : {str(self.__quadtree.depth)} layer(s)")
