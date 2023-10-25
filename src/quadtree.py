@@ -1,8 +1,8 @@
 from __future__ import annotations
-import json
-
-from tkinter import *
 from param import *
+import json
+from tkinter import *
+
 
 
 class QuadTree:

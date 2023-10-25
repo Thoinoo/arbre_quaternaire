@@ -1,4 +1,4 @@
-from src import QuadTree, TkQuadTree
+from src import QuadTree
 
 
 def test_sample():
