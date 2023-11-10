@@ -21,4 +21,5 @@ if __name__ == '__main__':
     filename = pictures[usr_input]
 
     win = TkQuadTree("../files/" + filename)
+    win.attributes('-topmost', 1)
     win.mainloop()

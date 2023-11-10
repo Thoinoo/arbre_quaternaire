@@ -48,6 +48,7 @@ class QuadTree:
 class TkQuadTree(Tk):
     @staticmethod
     def newQuadtreeFrame(master_frame, block, depth):
+        """ Create 4 new frames inside master_frame """
         depth += 1
         lenght = MAX_SIZE / (2 ** depth)
         for index, element in enumerate(block.getBlocks()):
@@ -61,17 +62,10 @@ class TkQuadTree(Tk):
                 frame = Frame(master_frame, bg=color_dict[element], width=lenght, height=lenght)
                 frame.place(x=x_pos, y=y_pos)
 
-    def paint(self):
-        """ TK representation of a Quadtree"""
-        main_frame = Frame(self, bg="blue", width=MAX_SIZE, height=MAX_SIZE)
-        main_frame.pack()
-        depth = 0
 
-        self.newQuadtreeFrame(self, self.__quadtree, depth)
-
-    def __init__(self, filename):
+    def __init__(self, filename: str):
         super().__init__()
         self.__quadtree = QuadTree.fromFile(filename)
         self.geometry(f"{MAX_SIZE}x{MAX_SIZE}")
-        self.paint()
+        self.newQuadtreeFrame(self, self.__quadtree, 0)
         self.title(f"Depth : {str(self.__quadtree.depth)} layer(s)")
