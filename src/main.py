@@ -1,24 +1,24 @@
+import os
+
 from quadtree import *
 
-
 if __name__ == '__main__':
-    text = 0
-    while text != "1" and text != "2" and text != "3":
-        print("\n1 : quadtree.txt\n2 : quadtree_easy.txt\n3 : test.txt\n quel fichier afficher ? ")
-        text = input()
 
-    match text:
-        case "1":
-            filename = "quadtree.txt"
-        case "2":
-            filename = "quadtree_easy.txt"
-        case "3":
-            filename = "test.txt"
+    pictures = {}
+    key = 1
+    for file in os.listdir('../files/'):
+        if ".txt" in file:
+            pictures[str(key)] = file
+            key += 1
 
-        case _:
-            filename = "test.txt"
+    usr_input = "0"
+    while not usr_input in pictures:
+        for key in pictures:
+            print(f"{key} : {pictures[key]}")
+        print("Quel fichier afficher ?")
+        usr_input = input()
+
+    filename = pictures[usr_input]
 
     win = TkQuadTree("../files/" + filename)
     win.mainloop()
-
-
