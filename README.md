@@ -2,7 +2,7 @@
 
 Utiliser python 3.10 s'il y a des problèmes de compatibilité.
 
-Lancer main.py, selectioner dans la console le fichier que l'on veut afficher, profiter :)
+Lancer main.py, selectioner dans la console le fichier (il y a un fichier mystery ?!) que l'on veut afficher, profiter :)
 
 # Exercices ludiques en python
 
