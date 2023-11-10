@@ -30,14 +30,6 @@ class QuadTree:
         except Exception as e:
             print("fromfile() error : " + str(e))
 
-        # depuis main.py le chemin des fichiers doit être modifié
-        try:
-            with open("../" + filename, "r") as f:
-                lst = json.load(f)
-                return QuadTree.fromList(lst)
-        except Exception as e:
-            print("fromfile() error : " + str(e))
-
     @staticmethod
     def fromList(qt_list: list) -> QuadTree:
         """ Generates a Quadtree from a list representation"""
@@ -82,4 +74,4 @@ class TkQuadTree(Tk):
         self.__quadtree = QuadTree.fromFile(filename)
         self.geometry(f"{MAX_SIZE}x{MAX_SIZE}")
         self.paint()
-        self.title( f"Depth : {str(self.__quadtree.depth)} layer(s)")
+        self.title(f"Depth : {str(self.__quadtree.depth)} layer(s)")
