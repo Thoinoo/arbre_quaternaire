@@ -1,8 +1,21 @@
+# Projet
+
+Le projet suivant vous permet d'afficher des quadtree (détails plus loin dans le readme),
+à partir de fichiers txt.
+
+# Requirements
+
+- python 3.11
+- Pour obtenir les dépendances, executer :
+```shell
+pip install -r requirements.txt
+```
+
 # Affichage TKinter
 
-Utiliser python 3.10 s'il y a des problèmes de compatibilité.
-
 Lancer main.py, selectioner dans la console le fichier (il y a un fichier mystery ?!) que l'on veut afficher, profiter :)
+
+Pour ajouter des fichiers à afficher, ajouter au format .txt le fichier dans le dossier src, puis lancer le main.py.
 
 # Exercices ludiques en python
 
