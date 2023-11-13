@@ -8,11 +8,17 @@ class QuadTree:
     NB_NODES: int = 4
 
     def __init__(self, hg: bool | QuadTree, hd: bool | QuadTree, bd: bool | QuadTree, bg: bool | QuadTree):
+        """
+        hg: top left block
+        hd: top rigth block
+        bd: bottom right block
+        bg: bottom left block
+        """
         self.__blocks = [hg, hd, bd, bg]
 
     @property
     def depth(self) -> int:
-        """ Recursion depth of the quadtree"""
+        """ Recursion depth of the quadtree """
         max_depth = 0
 
         for block in self.__blocks:
@@ -22,7 +28,7 @@ class QuadTree:
 
     @staticmethod
     def fromFile(filename: str) -> QuadTree:
-        """ Open a given file, containing a textual representation of a list"""
+        """ Open a given file, containing a textual representation of a list """
         try:
             with open(filename, "r") as f:
                 lst = json.load(f)
@@ -32,7 +38,7 @@ class QuadTree:
 
     @staticmethod
     def fromList(qt_list: list) -> QuadTree:
-        """ Generates a Quadtree from a list representation"""
+        """ Generates a Quadtree from a list representation """
         qt_param = []
         for element in qt_list:
             if not isinstance(element, list):
@@ -47,11 +53,16 @@ class QuadTree:
 
 class TkQuadTree(Tk):
     @staticmethod
-    def newQuadtreeFrame(master_frame, block, depth):
-        """ Create 4 new frames inside master_frame """
+    def newQuadtreeFrame(master_frame: Frame, qt: QuadTree, depth: int = 0):
+        """
+        Create 4 new frames inside master_frame
+        master_frame : main frame in which will be created 4 frame
+        qt: Quadtree that is going to be rendered
+        depth: depth of the node
+        """
         depth += 1
         lenght = MAX_SIZE / (2 ** depth)
-        for index, element in enumerate(block.getBlocks()):
+        for index, element in enumerate(qt.getBlocks()):
             x_pos = master_frame.winfo_x() + (coord_x[index] * lenght)
             y_pos = master_frame.winfo_y() + (coord_y[index] * lenght)
             if isinstance(element, QuadTree):
@@ -64,8 +75,9 @@ class TkQuadTree(Tk):
 
 
     def __init__(self, filename: str):
+        """ Initiate a TKinter windows with a representation of a Quadtree (filename) """
         super().__init__()
         self.__quadtree = QuadTree.fromFile(filename)
         self.geometry(f"{MAX_SIZE}x{MAX_SIZE}")
-        self.newQuadtreeFrame(self, self.__quadtree, 0)
+        self.newQuadtreeFrame(self, self.__quadtree)
         self.title(f"Depth : {str(self.__quadtree.depth)} layer(s)")
