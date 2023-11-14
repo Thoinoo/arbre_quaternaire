@@ -52,19 +52,23 @@ class QuadTree:
 
 
 class TkQuadTree(Tk):
+    COORD_X: list = [0, 1, 0, 1]
+    COORD_Y: list = [0, 0, 1, 1]
+    """ block placement order, must match the order of the Quadtree constructor """
+
     @staticmethod
     def newQuadtreeFrame(master_frame: Frame, qt: QuadTree, depth: int = 0):
         """
         Create 4 new frames inside master_frame
         master_frame : main frame in which will be created 4 frame
-        qt: Quadtree that is going to be rendered
-        depth: depth of the node
+        qt: Quadtree that is going to be rendered in the master_frame
+        depth: depth of the node, default = 0 to render the image fully
         """
         depth += 1
         lenght = MAX_SIZE / (2 ** depth)
         for index, element in enumerate(qt.getBlocks()):
-            x_pos = master_frame.winfo_x() + (coord_x[index] * lenght)
-            y_pos = master_frame.winfo_y() + (coord_y[index] * lenght)
+            x_pos = master_frame.winfo_x() + (TkQuadTree.COORD_X [index] * lenght)
+            y_pos = master_frame.winfo_y() + (TkQuadTree.COORD_Y[index] * lenght)
             if isinstance(element, QuadTree):
                 frame = Frame(master_frame, width=lenght, height=lenght)
                 frame.place(x=x_pos, y=y_pos)
@@ -73,11 +77,10 @@ class TkQuadTree(Tk):
                 frame = Frame(master_frame, bg=color_dict[element], width=lenght, height=lenght)
                 frame.place(x=x_pos, y=y_pos)
 
-
     def __init__(self, filename: str):
         """ Initiate a TKinter windows with a representation of a Quadtree (filename) """
         super().__init__()
         self.__quadtree = QuadTree.fromFile(filename)
         self.geometry(f"{MAX_SIZE}x{MAX_SIZE}")
         self.newQuadtreeFrame(self, self.__quadtree)
-        self.title(f"Depth : {str(self.__quadtree.depth)} layer(s)")
+        self.title(f"{filename} | Depth : {str(self.__quadtree.depth)} layer(s)")

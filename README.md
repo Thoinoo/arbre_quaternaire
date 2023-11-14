@@ -17,6 +17,8 @@ Lancer main.py, selectioner dans la console le fichier (il y a un fichier myster
 
 Pour ajouter des fichiers à afficher, ajouter au format .txt le fichier dans le dossier src, puis lancer le main.py.
 
+Vous pouvez changer la taille et la couleur de la représentation dans le fichier src/param.py.
+
 # Exercices ludiques en python
 
 Vous trouverez ici un ensemble d'exercices permettant de pratiquer python mais également découvrir quelques pans annexes de l'informatique en général.
