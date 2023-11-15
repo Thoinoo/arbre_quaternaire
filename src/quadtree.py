@@ -41,17 +41,20 @@ class QuadTree:
         """ Generates a Quadtree from a list representation """
         qt_param = []
         for element in qt_list:
-            if not isinstance(element, list):
-                qt_param.append(element)
-            else:
+            if isinstance(element, list):
                 qt_param.append(QuadTree.fromList(element))
-        return QuadTree(qt_param[0], qt_param[1], qt_param[2], qt_param[3])
+            else:
+                qt_param.append(element)
+        return QuadTree(*qt_param)
 
-    def getBlocks(self):
+    @property
+    def blocks(self):
+        """ return blocks property """
         return self.__blocks
 
 
 class TkQuadTree(Tk):
+    """ Allow to display a Quadtree """
     COORD_X: list = [0, 1, 0, 1]
     COORD_Y: list = [0, 0, 1, 1]
     """ block placement order, must match the order of the Quadtree constructor """
@@ -65,8 +68,8 @@ class TkQuadTree(Tk):
         depth: depth of the node, default = 0 to render the image fully
         """
         depth += 1
-        lenght = MAX_SIZE / (2 ** depth)
-        for index, element in enumerate(qt.getBlocks()):
+        lenght = MAX_SIZE // (2 ** depth)
+        for index, element in enumerate(qt.blocks):
             x_pos = master_frame.winfo_x() + (TkQuadTree.COORD_X [index] * lenght)
             y_pos = master_frame.winfo_y() + (TkQuadTree.COORD_Y[index] * lenght)
             if isinstance(element, QuadTree):

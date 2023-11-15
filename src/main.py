@@ -22,4 +22,4 @@ if __name__ == '__main__':
 
     win = TkQuadTree("../files/" + filename)
     win.attributes('-topmost', 1)
-    win.mainloop()
+
