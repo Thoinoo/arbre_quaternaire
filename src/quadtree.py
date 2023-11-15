@@ -28,7 +28,7 @@ class QuadTree:
 
     @staticmethod
     def isFormatCorrect(data: list) -> bool:
-        """ Check if the file is in a Quadtree list format, if not stop the app"""
+        """ Check if the file is in a Quadtree list format """
         if isinstance(data, list):
             if len(data) != QuadTree.NB_NODES:
                 return False
@@ -39,16 +39,18 @@ class QuadTree:
 
     @staticmethod
     def fromFile(filename: str) -> QuadTree:
-        """ Open a given file, containing a textual representation of a list """
+        """ Open a given file, containing a textual representation of a list,
+         check if the list is in a Quatree format, if not close the app"""
         try:
             with open(filename, "r") as f:
                 lst = json.load(f)
-                if not QuadTree.isFormatCorrect(lst):
-                    print(f"bad file format : {filename}")
-                    exit()
-                return QuadTree.fromList(lst)
-        except Exception as e:
+        except FileNotFoundError as e:
             print("fromfile() error : " + str(e))
+
+        if not QuadTree.isFormatCorrect(lst):
+            print(f"bad file format : {filename}")
+            exit()
+        return QuadTree.fromList(lst)
 
     @staticmethod
     def fromList(qt_list: list) -> QuadTree:
