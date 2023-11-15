@@ -27,11 +27,25 @@ class QuadTree:
         return max_depth + 1
 
     @staticmethod
+    def isFormatCorrect(data: list) -> bool:
+        """ Check if the file is in a Quadtree list format, if not stop the app"""
+        if isinstance(data, list):
+            if len(data) != QuadTree.NB_NODES:
+                return False
+            for element in data:
+                if not QuadTree.isFormatCorrect(element):
+                    return False
+        return True
+
+    @staticmethod
     def fromFile(filename: str) -> QuadTree:
         """ Open a given file, containing a textual representation of a list """
         try:
             with open(filename, "r") as f:
                 lst = json.load(f)
+                if not QuadTree.isFormatCorrect(lst):
+                    print(f"bad file format : {filename}")
+                    exit()
                 return QuadTree.fromList(lst)
         except Exception as e:
             print("fromfile() error : " + str(e))
@@ -70,7 +84,7 @@ class TkQuadTree(Tk):
         depth += 1
         lenght = MAX_SIZE // (2 ** depth)
         for index, element in enumerate(qt.blocks):
-            x_pos = master_frame.winfo_x() + (TkQuadTree.COORD_X [index] * lenght)
+            x_pos = master_frame.winfo_x() + (TkQuadTree.COORD_X[index] * lenght)
             y_pos = master_frame.winfo_y() + (TkQuadTree.COORD_Y[index] * lenght)
             if isinstance(element, QuadTree):
                 frame = Frame(master_frame, width=lenght, height=lenght)
